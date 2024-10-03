@@ -4,13 +4,16 @@ import socketIO from "socket.io";
 import http from "http";
 
 export class Server {
+  private static _instance: Server
+
   public app: express.Application;
   public port: number;
 
   public io: socketIO.Server;
   private httpServer: http.Server;
 
-  constructor() {
+  //private in order to apply singleton
+  private constructor() {
     this.app = express();
     this.port = SERVER_PORT;
 
@@ -19,6 +22,11 @@ export class Server {
     this.io = socketIO(this.httpServer);
 
     this.escucharSockets()
+  }
+
+  //si la instancia ya existe devuelve la instancia, sino, la crea
+  public static get instance() {
+    return this._instance || (this._instance = new this())
   }
 
   private escucharSockets(){

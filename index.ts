@@ -4,7 +4,7 @@ import { router } from "./routes/router"
 import bodyParser from "body-parser"
 import cors from 'cors'
 
-const server = new Server()
+const server = Server.instance
 
 //siempre antes de las rutas
 //bodyParser para leer datos de un post, indicamos que lo que sea que posteen, genere un objeto de js
