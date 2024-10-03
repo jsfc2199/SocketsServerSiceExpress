@@ -12,7 +12,7 @@ class Server {
         this.port = environment_1.SERVER_PORT;
     }
     start(callback) {
-        this.app.listen(this.port, callback);
+        this.app.listen(this.port, callback());
     }
 }
 exports.Server = Server;
