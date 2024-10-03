@@ -2,6 +2,7 @@ import { Server } from "./class/server"
 import { SERVER_PORT } from "./global/environment"
 import { router } from "./routes/router"
 import bodyParser from "body-parser"
+import cors from 'cors'
 
 const server = new Server()
 
@@ -9,6 +10,9 @@ const server = new Server()
 //bodyParser para leer datos de un post, indicamos que lo que sea que posteen, genere un objeto de js
 server.app.use(bodyParser.urlencoded({extended: true}))
 server.app.use(bodyParser.json())
+
+//config cors
+server.app.use( cors({origin: true, credentials: true}))
 
 //config de las rutas
 server.app.use('/', router)
