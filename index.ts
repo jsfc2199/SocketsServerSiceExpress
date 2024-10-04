@@ -12,7 +12,7 @@ server.app.use(bodyParser.urlencoded({extended: true}))
 server.app.use(bodyParser.json())
 
 //config cors
-server.app.use( cors({origin: true, credentials: true}))
+server.app.use( cors({origin: 'http://localhost:4200', credentials: true}))
 
 //config de las rutas
 server.app.use('/', router)
