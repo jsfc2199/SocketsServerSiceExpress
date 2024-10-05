@@ -39,7 +39,7 @@ export class Server {
     console.log('escuchando conexiones - sockets')
     this.io.on('connection', cliente => {
       console.log('cliente conectado')
-     
+      socket.mensaje(cliente)
       socket.desconectar(cliente)
     })
   }
