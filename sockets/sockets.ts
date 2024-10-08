@@ -15,3 +15,14 @@ export const mensaje = (cliente: Socket, io: socketIO.Server) => {
     io.emit('mensaje-nuevo', payload)
   });
 };
+
+//como desde el cliente estamos emitiendo el callback lo podemos recibir en el servidor
+export const configurarUsuario = (cliente: Socket, io: socketIO.Server) => {
+  cliente.on("configurar-usuario", (payload: { nombre: string }, callback: Function) => {
+    console.log('configurando usuario', payload.nombre)
+    callback({
+      ok: true,
+      mensaje: `Usuario ${payload.nombre} configurado`
+    })
+  });
+};
