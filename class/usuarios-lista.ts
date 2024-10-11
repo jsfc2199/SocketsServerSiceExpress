@@ -6,6 +6,7 @@ export class UsuariosLista {
 
   public agregar(usuario: Usuario) {
     this.lista.push(usuario);
+    console.log(this.lista)
     return usuario;
   }
 
