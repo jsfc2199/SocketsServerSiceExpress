@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { Server } from "../class/server";
 import { DefaultEventsMap, RemoteSocket } from "socket.io";
+import { usuariasConectados } from "../sockets/sockets";
 
 export const router = Router();
 
@@ -87,4 +88,14 @@ router.get("/usuarios/", async (req: Request, res: Response) => {
         clientes: [],
       });
     });
+});
+
+//obtener nombre de usuarios
+router.get("/usuarios/detalle", (req: Request, res: Response) => {
+  const usuariosConectados = usuariasConectados;
+
+  res.json({
+    ok: true,
+    usuarios: usuariasConectados.getLista(),
+  });
 });
