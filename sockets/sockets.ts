@@ -45,3 +45,15 @@ export const configurarUsuario = (cliente: Socket, io: socketIO.Server) => {
     }
   );
 };
+
+//obtener usuarios
+export const obtenerUsuariosInit = (cliente: Socket, io: socketIO.Server) => {
+  cliente.on("obtener-usuarios", () => {
+    
+    //si queremos emitirlo a todos no usamos el to
+    // io.emit("usuarios-activos", usuariasConectados.getLista());
+
+
+    io.to(cliente.id).emit("usuarios-activos", usuariasConectados.getLista());
+  });
+};

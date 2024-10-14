@@ -43,6 +43,9 @@ export class Server {
 
       //Configurar usuario
       socket.configurarUsuario(cliente, this.io)
+
+      //obtener usuarios activos
+      socket.obtenerUsuariosInit(cliente, this.io)
       socket.mensaje(cliente, this.io)
       socket.desconectar(cliente, this.io)
     })
