@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Server } from "../class/server";
+import { DefaultEventsMap, RemoteSocket } from "socket.io";
 
 export const router = Router();
 
@@ -15,11 +16,12 @@ router.post("/mensajes", (req: Request, res: Response) => {
   const de = req.body.de;
 
   const payload = {
-    de, cuerpo
-  }
+    de,
+    cuerpo,
+  };
 
   const server = Server.instance;
-  server.io.emit('mensaje-nuevo', payload	)
+  server.io.emit("mensaje-nuevo", payload);
 
   res.json({
     ok: true,
@@ -34,19 +36,55 @@ router.post("/mensajes/:id", (req: Request, res: Response) => {
   const de = req.body.de;
 
   const payload = {
-    de, cuerpo
-  }
+    de,
+    cuerpo,
+  };
 
   const server = Server.instance;
 
   //mandar mensaje a uno a todos (con el id mandamos a uno en específico)
   //si hacemos server.io.emit lo manda a todos
-  server.io.in(id).emit('mensaje-privado', payload	)
+  server.io.in(id).emit("mensaje-privado", payload);
 
   res.json({
     ok: true,
     cuerpo,
-    de, 
+    de,
     id,
   });
+});
+
+//obtener todos los ids de los usuarios
+router.get("/usuarios/", async (req: Request, res: Response) => {
+  //obtenemos la instancia de la sesión
+  const server = Server.instance;
+
+  //obtener clientes
+  await server.io
+    .fetchSockets()
+    .then((socket: RemoteSocket<DefaultEventsMap, any>[]) => {
+      if (socket.length > 0) {
+        let aux: string[] = [];
+        socket.forEach((ele) => {
+          aux.push(ele.id);
+        });
+
+        return res.json({
+          ok: true,
+          clientes: aux,
+        });
+      } else {
+        return res.json({
+          ok: false,
+          clientes: [],
+        });
+      }
+    })
+    .catch((err) => {
+      return res.json({
+        ok: false,
+        err,
+        clientes: [],
+      });
+    });
 });
