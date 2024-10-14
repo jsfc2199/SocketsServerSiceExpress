@@ -92,7 +92,6 @@ router.get("/usuarios/", async (req: Request, res: Response) => {
 
 //obtener nombre de usuarios
 router.get("/usuarios/detalle", (req: Request, res: Response) => {
-  const usuariosConectados = usuariasConectados;
 
   res.json({
     ok: true,

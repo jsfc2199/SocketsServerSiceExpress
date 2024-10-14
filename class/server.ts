@@ -39,12 +39,12 @@ export class Server {
     console.log('escuchando conexiones - sockets')
     this.io.on('connection', cliente => {
       //ConectarCliente
-      socket.conectarCliente(cliente)
+      socket.conectarCliente(cliente, this.io)
 
       //Configurar usuario
       socket.configurarUsuario(cliente, this.io)
       socket.mensaje(cliente, this.io)
-      socket.desconectar(cliente)
+      socket.desconectar(cliente, this.io)
     })
   }
 
